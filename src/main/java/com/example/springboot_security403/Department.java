@@ -4,15 +4,15 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Owner {
+public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Pet> pets;
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Employee> employees;
 
     public long getId() {
         return id;
@@ -30,11 +30,11 @@ public class Owner {
         this.name = name;
     }
 
-    public Set<Pet> getPets() {
-        return pets;
+    public Set<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setPets(Set<Pet> pets) {
-        this.pets = pets;
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }

@@ -2,5 +2,5 @@ package com.example.springboot_security403;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface OwnerRepository extends CrudRepository<Owner, Long> {
+public interface DepartmentRepository extends CrudRepository<Department, Long> {
 }

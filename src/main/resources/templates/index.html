@@ -9,28 +9,31 @@
 </head>
 <body>
 
-<h2> Owner list </h2>
-<div th:each="owner:${owners}">
-    <h3 th:text="${owner.name}"></h3>
-    <a th:href="@{/updateOwner/{id}(id=${owner.id})}">Update Owner</a>
-    <a th:href="@{/deleteOwner/{id}(id=${owner.id})}">Delete Owner</a>
-    <ul>
-        <th:block th:each="pet:${owner.pets}">
-            <li th:inline="text"><b>[[${pet.name}]]</b></li>
-            <li th:inline="text"><b>[[${pet.type}]]</b></li>
-            <li th:inline="text"><b>[[${pet.description}]]</b></li>
-            <li><a th:href="@{/updatePet/{id}(id=${pet.id})}">Update Pet</a></li>
-            <li><a th:href="@{/deletePet/{id}(id=${pet.id})}">Delete Pet</a></li>
-        </th:block>
-    </ul>
+<h2> Department list </h2>
+<div th:each="department:${departments}">
+    <h3 th:text="${department.name}"></h3>
+    <a th:href="@{/updateDepartment/{id}(id=${department.id})}">Update Department</a>
+    <a th:href="@{/deleteDepartment/{id}(id=${department.id})}">Delete Department</a>
+    <th:block th:each="employee:${department.employees}">
+        <div th:if="${employee.headshot}!=null">
+            <img th:src="${employee.headshot}" width="400"><hr>
+        </div>
+        <div>
+            <a th:inline="text">Full Name:<b>[[${employee.firstName}]] [[${employee.lastName}]] </b></a>
+            <br>
+            <a th:inline="text">Department:<b>[[${employee.department.name}]]</b> </a>
+        </div>
+        <a th:href="@{/updateEmployee/{id}(id=${employee.id})}">Update Employee</a>
+        <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete Employee</a>
+    </th:block>
 </div>
 <br>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Logout">
 </form>
-<a th:href="@{/addOwner}">Add Owner</a>
-<a th:href="@{/addPet}">Add Pet</a>
-<a>Add Pet</a>
+<a th:href="@{/addDepartment}">Add Department</a>
+<a th:href="@{/addEmployee}">Add Employee</a>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

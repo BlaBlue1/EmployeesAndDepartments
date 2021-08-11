@@ -1,11 +1,15 @@
 package com.example.springboot_security403;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -13,10 +17,13 @@ public class HomeController {
     UserRepository userRepository;
 
     @Autowired
-    OwnerRepository ownerRepository;
+    DepartmentRepository departmentRepository;
 
     @Autowired
-    PetRepository petRepository;
+    EmployeeRepository employeeRepository;
+
+    @Autowired
+    CloudinaryConfig cloudc;
 
     @RequestMapping("/secure")
     public String secure(Principal principal, Model model){
@@ -27,56 +34,65 @@ public class HomeController {
 
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("owners", ownerRepository.findAll());
+        model.addAttribute("departments", departmentRepository.findAll());
         return "index";
     }
-    @GetMapping("/addOwner")
-    public String addOwner(Model model){
-        model.addAttribute("owner", new Owner());
-        return "ownerForm";
+    @GetMapping("/addDepartment")
+    public String addDepartment(Model model){
+        model.addAttribute("department", new Department());
+        return "departmentForm";
     }
-    @RequestMapping("/updateOwner/{id}")
-    public String updateOwner(@PathVariable("id")long id, Model model){
-        model.addAttribute("owner", ownerRepository.findById(id).get());
-        return "ownerForm";
+    @RequestMapping("/updateDepartment/{id}")
+    public String updateDepartment(@PathVariable("id")long id, Model model){
+        model.addAttribute("department", departmentRepository.findById(id).get());
+        return "departmentForm";
     }
-    @RequestMapping("/deleteOwner/{id}")
-    public String deleteOwner(@PathVariable("id")long id){
-        ownerRepository.deleteById(id);
+    @RequestMapping("/deleteDepartment/{id}")
+    public String deleteDepartment(@PathVariable("id")long id){
+        departmentRepository.deleteById(id);
         return "redirect:/";
     }
 
-    @PostMapping("/processOwner")
-    public String processOwner(@ModelAttribute Owner owner){
-        ownerRepository.save(owner);
+    @PostMapping("/processDepartment")
+    public String processDepartment(@ModelAttribute Department department){
+        departmentRepository.save(department);
         return "redirect:/";
     }
 
-    @GetMapping("/addPet")
-    public String addPet(Model model){
-        model.addAttribute("pet", new Pet());
-        model.addAttribute("owner", ownerRepository.findAll());
-        return "petForm";
+    @GetMapping("/addEmployee")
+    public String addEmployee(Model model){
+        model.addAttribute("employee", new Employee());
+        model.addAttribute("departments", departmentRepository.findAll());
+        return "employeeForm";
     }
-    @RequestMapping("/updatePet/{id}")
-    public String updatePet(@PathVariable("id") long id, Model model){
-        model.addAttribute("pet", petRepository.findById(id).get());
-        model.addAttribute("owners", ownerRepository.findAll());
-        return "petForm";
+    @RequestMapping("/updateEmployee/{id}")
+    public String updateEmployee(@PathVariable("id") long id, Model model){
+        model.addAttribute("employee", employeeRepository.findById(id).get());
+        model.addAttribute("departments", departmentRepository.findAll());
+        return "employeeForm";
     }
-    @RequestMapping("/deletePet/{id}")
-    public String deletePet(@PathVariable("id")long id){
-        petRepository.deleteById(id);
+    @RequestMapping("/deleteEmployee/{id}")
+    public String deleteEmployee(@PathVariable("id")long id){
+        employeeRepository.deleteById(id);
         return "redirect:/";
     }
 
-
-    @PostMapping("/processPet")
-    public String processPet(@ModelAttribute Pet pet){
-        petRepository.save(pet);
+    @PostMapping("/processEmployee")
+    public String processEmployee(@ModelAttribute Employee employee,
+                                  @RequestParam("file") MultipartFile file){
+        if (file.isEmpty()){
+            return "redirect:/addEmployee";
+        }
+        try {
+            Map uploadResult = cloudc.upload(file.getBytes(),
+                    ObjectUtils.asMap("resourcetype", "auto"));
+            employee.setHeadshot(uploadResult.get("url").toString());
+            employeeRepository.save(employee);
+        } catch (IOException e) {
+            return "redirect:/addEmployee";
+        }
         return "redirect:/";
     }
-
 
     @RequestMapping("/login")
     public String login(){

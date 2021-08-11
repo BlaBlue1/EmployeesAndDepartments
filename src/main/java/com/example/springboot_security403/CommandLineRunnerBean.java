@@ -19,7 +19,7 @@ public class CommandLineRunnerBean implements CommandLineRunner {
     RoleRepository roleRepository;
 
     @Autowired
-    OwnerRepository ownerRepository;
+    DepartmentRepository departmentRepository;
 
     public void run(String...args){
         User user = new User("bart", "bart@domain.com", "bart", "Bart", "Simpson", true); //the names and passwords are examples
@@ -37,35 +37,39 @@ public class CommandLineRunnerBean implements CommandLineRunner {
         roleRepository.save(adminRole1);
         roleRepository.save(adminRole2);
 
-        //create an owner
-        Owner owner = new Owner();
 
-        owner.setName("Ruth");
+        Department department = new Department();
+        Department department2 = new Department();
 
-        //create pet
-        Pet pet = new Pet();
-        pet.setName("Jack");
-        pet.setType("Dog");
-        pet.setDescription("White Chihuahua");
-        pet.setOwner(owner);
-
-        Pet pet2 = new Pet();
-        pet.setName("Spider");
-        pet.setType("Cat");
-        pet.setDescription("Cute Abyssinian cat");
-        pet.setOwner(owner);
+        department.setName("Human Resource");
+        department2.setName("IT");
 
 
-        //add the pet to an empty list
-        Set<Pet> pets = new HashSet<>();
-        pets.add(pet);
-        pets.add(pet2);
+        Employee employee = new Employee();
+        employee.setFirstName("Ruth");
+        employee.setLastName("Tadese");
+        employee.setDepartment(department);
 
-        //adding the list of pet to the owner's pets list
-        owner.setPets(pets);
+        Employee employee2 = new Employee();
+        employee2.setFirstName("Bethel");
+        employee2.setLastName("Sahle");
+        employee2.setDepartment(department2);
 
-        //save owner to the database
-        ownerRepository.save(owner);
+
+        Set<Employee> employees = new HashSet<>();
+        employees.add(employee);
+
+
+        Set<Employee> empIT = new HashSet<>();
+        empIT.add(employee2);
+
+
+        department.setEmployees(employees);
+        department2.setEmployees(empIT);
+
+
+        departmentRepository.save(department);
+        departmentRepository.save(department2);
 
     }
 }
