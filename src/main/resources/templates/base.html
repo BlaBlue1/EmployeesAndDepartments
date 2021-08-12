@@ -26,13 +26,17 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/allEmployees}">Employees</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/allDepartments}">Departments</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">More</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/allDepartments}">All Departments</a></li>
-                        <li><a class="dropdown-item" th:href="@{/addDepartment}">Add Department</a></li>
-                        <li><a class="dropdown-item" th:href="@{/allEmployees}">All Employees</a></li>
                         <li><a class="dropdown-item" th:href="@{/addEmployee}">Add Employee</a></li>
+                        <li><a class="dropdown-item" th:href="@{/addDepartment}">Add Department</a></li>
                     </ul>
                 </li>
             </ul>

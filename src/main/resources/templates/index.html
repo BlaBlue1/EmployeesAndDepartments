@@ -19,7 +19,7 @@
             <a th:href="@{/deleteDepartment/{id}(id=${department.id})}">Delete Department</a>
             <th:block th:each="employee:${department.employees}">
                 <div class="col-md-8" th:if="${employee.headshot}!=null">
-                    <img th:src="${employee.headshot}" class="card-img-top" width="400" height="400"><hr>
+                    <img th:src="${employee.headshot}" class="card-img-top" width="350" height="350"><hr>
                 </div>
                 <div class="col-md-4">
                     <div class="card-body">
