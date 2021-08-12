@@ -11,27 +11,27 @@
 <div class="jumbotron text-center">
     <h1>Employee Form</h1>
 </div>
-<div class="Container">
+<div class="container">
     <form th:action="@{/processEmployee}" th:object="${employee}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}">
         <input type="hidden" th:field="*{headshot}">
         <br>
-        <div class="mb-3">
+        <div class="form-group">
             <label th:for="firstName" >First Name</label>
             <input th:class="form-control" type="text" th:field="*{firstName}"/>
         </div>
         <br>
-        <div class="mb-3">
+        <div class="form-group">
             <label th:for="lastName">Last Name</label>
             <input th:class="form-control" type="text" th:field="*{lastName}"/>
         </div>
         <br>
-        <div class="mb-3">
+        <div class="form-group">
             <label th:for="jobTitle">Job Title</label>
             <input th:class="form-control" type="text" th:field="*{jobTitle}"/>
         </div>
         <br>
-        <div class="mb-3">
+        <div class="form-group">
             <label th:for="headshot">Profile Picture</label>
             <input th:class="form-control" type="file" name="file"/>
         </div>

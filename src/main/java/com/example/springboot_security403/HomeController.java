@@ -86,7 +86,7 @@ public class HomeController {
     public String processEmployee(@ModelAttribute Employee employee,
                                   @RequestParam("file") MultipartFile file) {
         if (file.isEmpty() && (employee.getHeadshot() == null) || employee.getHeadshot().isEmpty()) {
-            employee.setHeadshot("https://res.cloudinary.com/dlxiq5scx/image/upload/v1628703604/bsgzrviuqihneyqkwsgf.jpg");
+            employee.setHeadshot("https://res.cloudinary.com/dlxiq5scx/image/upload/v1628780611/1200px-User_font_awesome.svg_hat2qu.png");
         } else if (!file.isEmpty()) {
             try {
                 Map uploadResult = cloudc.upload(file.getBytes(),

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -14,8 +14,10 @@
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0" th:each="department:${departments}">
             <h3 th:text="${department.name}"></h3>
-            <a th:href="@{/updateDepartment/{id}(id=${department.id})}">Update Department</a>
-            <a th:href="@{/deleteDepartment/{id}(id=${department.id})}">Delete Department</a>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/updateDepartment/{id}(id=${department.id})}">Update Department</a>
+                <a th:href="@{/deleteDepartment/{id}(id=${department.id})}">Delete Department</a>
+            </div>
             <th:block th:each="employee:${department.employees}">
                 <div class="col-md-8" th:if="${employee.headshot}!=null">
                     <img th:src="${employee.headshot}" class="card-img-top" width="350" height="350"><hr>
@@ -27,8 +29,10 @@
                         <a th:inline="text">Job Title:<b>[[${employee.jobTitle}]]</b></a>
                         <br>
                         <a th:inline="text">Department:<b>[[${employee.department.name}]]</b> </a><br>
-                        <a th:href="@{/updateEmployee/{id}(id=${employee.id})}">Update Employee</a>
-                        <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete Employee</a>
+                        <div sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{/updateEmployee/{id}(id=${employee.id})}">Update Employee</a>
+                            <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete Employee</a>
+                        </div>
                     </div>
                 </div>
             </th:block>
