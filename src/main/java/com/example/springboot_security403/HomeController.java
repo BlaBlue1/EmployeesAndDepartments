@@ -84,20 +84,23 @@ public class HomeController {
 
     @PostMapping("/processEmployee")
     public String processEmployee(@ModelAttribute Employee employee,
-                                  @RequestParam("file") MultipartFile file){
-        if (file.isEmpty()){ //work on this
-            return "redirect:/addEmployee"; //work on this
+                                  @RequestParam("file") MultipartFile file) {
+        if (file.isEmpty() && (employee.getHeadshot() == null) || employee.getHeadshot().isEmpty()) {
+            employee.setHeadshot("https://res.cloudinary.com/dlxiq5scx/image/upload/v1628703604/bsgzrviuqihneyqkwsgf.jpg");
+        } else if (!file.isEmpty()) {
+            try {
+                Map uploadResult = cloudc.upload(file.getBytes(),
+                        ObjectUtils.asMap("resourcetype", "auto"));
+                employee.setHeadshot(uploadResult.get("url").toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "redirect:/addEmployee";
+            }
         }
-        try {
-            Map uploadResult = cloudc.upload(file.getBytes(),
-                    ObjectUtils.asMap("resourcetype", "auto"));
-            employee.setHeadshot(uploadResult.get("url").toString());
             employeeRepository.save(employee);
-        } catch (IOException e) {
-            return "redirect:/addEmployee";
-        }
-        return "redirect:/";
+            return "redirect:/";
     }
+
     @RequestMapping("/allEmployees")
     public String allEmployees(Model model){
         model.addAttribute("employees", employeeRepository.findAll());
