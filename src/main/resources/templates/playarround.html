@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Index Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<nav th:replace="base :: navbar"></nav>
+<div class="container">
+    <div class="card" style="width: 18rem;">
+        <div th:each="department:${departments}">
+            <h3 th:text="${department.name}"></h3>
+            <th:block th:each="employee:${department.employees}">
+                <div th:if="${employee.headshot}!=null">
+                    <img th:src="${employee.headshot}" class="card-img-top" width="350" height="400"><hr>
+                </div>
+                <div class="card-body">
+                    <a th:inline="text">Full Name:<b>[[${employee.firstName}]] [[${employee.lastName}]] </b></a>
+                    <br>
+                    <a th:inline="text">Job Title:<b>[[${employee.jobTitle}]]</b></a>
+                    <br>
+                    <a th:inline="text">Department:<b>[[${employee.department.name}]]</b> </a>
+               </div>
+            </th:block>
+        </div>
+    </div>
+</div>
+<a th:href="@{/updateDepartment/{id}(id=${department.id})}" class="button">Update Department</a>
+<a th:href="@{/deleteDepartment/{id}(id=${department.id})}" class="button">Delete Department</a>
+<a th:href="@{/updateEmployee/{id}(id=${employee.id})}" class="button">Update Employee</a>
+<a th:href="@{/deleteEmployee/{id}(id=${employee.id})}" class="button">Delete Employee</a>
+<br>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout">
+</form>
+
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0" th:each="department:${departments}">
+        <h3 th:text="${department.name}"></h3>
+        <a th:href="@{/updateDepartment/{id}(id=${department.id})}">Update Department</a>
+        <a th:href="@{/deleteDepartment/{id}(id=${department.id})}">Delete Department</a>
+        <th:block th:each="employee:${department.employees}">
+        <div class="col-md-4" th:if="${employee.headshot}!=null">
+            <img th:src="${employee.headshot}" class="card-img-top" width="350" height="400"><hr>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <a th:inline="text">Full Name:<b>[[${employee.firstName}]] [[${employee.lastName}]] </b></a>
+                <br>
+                <a th:inline="text">Job Title:<b>[[${employee.jobTitle}]]</b></a>
+                <br>
+                <a th:inline="text">Department:<b>[[${employee.department.name}]]</b> </a>
+                <a th:href="@{/updateEmployee/{id}(id=${employee.id})}">Update Employee</a>
+                <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete Employee</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div class="jumbotron text-center">
+        <h2>Employee list</h2>
+    </div>
+    <div th:each="department:${departments}">
+        <h3 th:text="${department.name}"></h3>
+        <a th:href="@{/updateDepartment/{id}(id=${department.id})}">Update Department</a>
+        <a th:href="@{/deleteDepartment/{id}(id=${department.id})}">Delete Department</a>
+        <th:block th:each="employee:${department.employees}">
+            <div th:if="${employee.headshot}!=null">
+                <img th:src="${employee.headshot}" class="img-thumbnail" width="350" height="400"><hr>
+            </div>
+            <div>
+                <a th:inline="text">Full Name:<b>[[${employee.firstName}]] [[${employee.lastName}]] </b></a>
+                <br>
+                <a th:inline="text">Job Title:<b>[[${employee.jobTitle}]]</b></a>
+                <br>
+                <a th:inline="text">Department:<b>[[${employee.department.name}]]</b> </a>
+            </div>
+            <a th:href="@{/updateEmployee/{id}(id=${employee.id})}">Update Employee</a>
+            <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete Employee</a>
+        </th:block>
+    </div>
+    <br>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout">
+    </form>
+    <a th:href="@{/addDepartment}">Add Department</a>
+    <a th:href="@{/addEmployee}">Add Employee</a>
+    <a th:href="@{/allEmployees}">All Employees</a>
+    <a th:href="@{/allDepartments}">All Departments</a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -39,37 +39,41 @@ public class CommandLineRunnerBean implements CommandLineRunner {
 
 
         Department department = new Department();
-        Department department2 = new Department();
+//        Department department2 = new Department();
 
         department.setName("Human Resource");
-        department2.setName("IT");
+//        department2.setName("IT");
 
 
         Employee employee = new Employee();
-        employee.setFirstName("Ruth");
-        employee.setLastName("Tadese");
+        employee.setFirstName("Bart");
+        employee.setLastName("Simpson");
+        employee.setJobTitle("Manager");
+        employee.setHeadshot("https://res.cloudinary.com/dlxiq5scx/image/upload/v1628703604/bsgzrviuqihneyqkwsgf.jpg");
         employee.setDepartment(department);
 
-        Employee employee2 = new Employee();
-        employee2.setFirstName("Bethel");
-        employee2.setLastName("Sahle");
-        employee2.setDepartment(department2);
+//        Employee employee2 = new Employee();
+//        employee2.setFirstName("Bethel");
+//        employee2.setLastName("Sahle");
+//        employee2.setJobTitle("Administrator");
+//        employee2.setHeadshot("https://res.cloudinary.com/dlxiq5scx/image/upload/v1628701517/mfoysumawz0n27hbo4tg.jpg");
+//        employee2.setDepartment(department2);
 
 
         Set<Employee> employees = new HashSet<>();
         employees.add(employee);
 
 
-        Set<Employee> empIT = new HashSet<>();
-        empIT.add(employee2);
+//        Set<Employee> empIT = new HashSet<>();
+//        empIT.add(employee2);
 
 
         department.setEmployees(employees);
-        department2.setEmployees(empIT);
+//        department2.setEmployees(empIT);
 
 
         departmentRepository.save(department);
-        departmentRepository.save(department2);
+//        departmentRepository.save(department2);
 
     }
 }

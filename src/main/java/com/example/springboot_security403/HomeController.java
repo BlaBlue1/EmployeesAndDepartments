@@ -58,6 +58,11 @@ public class HomeController {
         departmentRepository.save(department);
         return "redirect:/";
     }
+    @RequestMapping("/allDepartments")
+    public String allDepartments(Model model){
+        model.addAttribute("departments", departmentRepository.findAll());
+        return "allDepartments";
+    }
 
     @GetMapping("/addEmployee")
     public String addEmployee(Model model){
@@ -80,8 +85,8 @@ public class HomeController {
     @PostMapping("/processEmployee")
     public String processEmployee(@ModelAttribute Employee employee,
                                   @RequestParam("file") MultipartFile file){
-        if (file.isEmpty()){
-            return "redirect:/addEmployee";
+        if (file.isEmpty()){ //work on this
+            return "redirect:/addEmployee"; //work on this
         }
         try {
             Map uploadResult = cloudc.upload(file.getBytes(),
@@ -92,6 +97,11 @@ public class HomeController {
             return "redirect:/addEmployee";
         }
         return "redirect:/";
+    }
+    @RequestMapping("/allEmployees")
+    public String allEmployees(Model model){
+        model.addAttribute("employees", employeeRepository.findAll());
+        return "allEmployees";
     }
 
     @RequestMapping("/login")

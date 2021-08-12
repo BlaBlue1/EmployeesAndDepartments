@@ -9,9 +9,17 @@ public class Employee {
     private long id;
 
     private String firstName;
-
     private String lastName;
+    private String jobTitle;
     private String headshot;
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
